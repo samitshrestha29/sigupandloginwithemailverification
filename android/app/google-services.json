@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "983150730449",
+    "project_id": "heyflutter-2c1f7",
+    "storage_bucket": "heyflutter-2c1f7.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:983150730449:android:f6960dcbe90b97497f39f0",
+        "android_client_info": {
+          "package_name": "com.example.heyfluttersigninemailverification"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "983150730449-7fl8b79r5f6ka55n8mgtqfvitt5srmnr.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDkQQva1z7VMBTqgiN3uYNbGQGubz6LA7A"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "983150730449-7fl8b79r5f6ka55n8mgtqfvitt5srmnr.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
