@@ -4,6 +4,7 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 
 import 'package:heyfluttersigninemailverification/main.dart';
+import 'package:heyfluttersigninemailverification/widgets/utils.dart';
 
 class LoginWidget extends StatefulWidget {
   final VoidCallback onClickedSignup;
@@ -33,14 +34,14 @@ class _LoginWidgetState extends State<LoginWidget> {
             const SizedBox(height: 40),
             TextField(
               controller: emailController,
-              cursorColor: Colors.white,
+              cursorColor: Colors.black,
               textInputAction: TextInputAction.next,
               decoration: const InputDecoration(labelText: 'Email'),
             ),
             const SizedBox(height: 4),
             TextField(
               controller: passwordController,
-              cursorColor: Colors.white,
+              cursorColor: Colors.black,
               textInputAction: TextInputAction.done,
               decoration: const InputDecoration(
                 labelText: 'Password',
@@ -99,6 +100,7 @@ class _LoginWidgetState extends State<LoginWidget> {
           password: passwordController.text.trim());
     } on FirebaseAuthException catch (e) {
       print(e);
+      Utils.showSnackBar(e.message);
     }
     //Navigator.of(context) not working
 

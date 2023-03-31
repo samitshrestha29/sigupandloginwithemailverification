@@ -1,7 +1,9 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
+import 'package:email_validator/email_validator.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:heyfluttersigninemailverification/widgets/utils.dart';
 
 import '../main.dart';
 
@@ -17,6 +19,7 @@ class SignUpWidget extends StatefulWidget {
 }
 
 class _SignUpWidgetState extends State<SignUpWidget> {
+  final formKey = GlobalKey<FormState>();
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
   @override
@@ -28,65 +31,79 @@ class _SignUpWidgetState extends State<SignUpWidget> {
   @override
   Widget build(BuildContext context) => SingleChildScrollView(
         padding: const EdgeInsets.all(16),
-        child: Column(
-          children: [
-            const SizedBox(height: 40),
-            TextField(
-              controller: emailController,
-              cursorColor: Colors.white,
-              textInputAction: TextInputAction.next,
-              decoration: const InputDecoration(labelText: 'Email'),
-            ),
-            const SizedBox(height: 4),
-            TextField(
-              controller: passwordController,
-              cursorColor: Colors.white,
-              textInputAction: TextInputAction.done,
-              decoration: const InputDecoration(
-                labelText: 'Password',
+        child: Form(
+          key: formKey,
+          child: Column(
+            children: [
+              const SizedBox(height: 40),
+              TextFormField(
+                controller: emailController,
+                cursorColor: Colors.black,
+                textInputAction: TextInputAction.next,
+                decoration: const InputDecoration(labelText: 'Email'),
+                autovalidateMode: AutovalidateMode.onUserInteraction,
+                validator: (email) =>
+                    email != null && !EmailValidator.validate(email)
+                        ? 'Enter a valid email'
+                        : null,
               ),
-              obscureText: true,
-            ),
-            const SizedBox(
-              height: 20,
-            ),
-            ElevatedButton.icon(
-              style: ElevatedButton.styleFrom(
-                  minimumSize: const Size.fromHeight(50)),
-              onPressed: signUp,
-              icon: const Icon(
-                Icons.arrow_forward,
-                size: 32,
+              const SizedBox(height: 4),
+              TextFormField(
+                controller: passwordController,
+                cursorColor: Colors.black,
+                textInputAction: TextInputAction.done,
+                decoration: const InputDecoration(
+                  labelText: 'Password',
+                ),
+                obscureText: true,
+                autovalidateMode: AutovalidateMode.onUserInteraction,
+                validator: (value) => value != null && value.length < 6
+                    ? 'Enter min. 6 character'
+                    : null,
               ),
-              label: const Text(
-                'Sign up',
-                style: TextStyle(fontSize: 24),
+              const SizedBox(
+                height: 20,
               ),
-            ),
-            const SizedBox(height: 24),
-            RichText(
-              text: TextSpan(
-                  text: 'Already have an account',
-                  style: const TextStyle(
-                    color: Colors.black,
-                  ),
-                  children: [
-                    TextSpan(
-                      recognizer: TapGestureRecognizer()
-                        ..onTap = widget.onClickedSignIn,
-                      text: 'Login',
-                      style: TextStyle(
-                        decoration: TextDecoration.underline,
-                        color: Theme.of(context).colorScheme.primary,
-                      ),
+              ElevatedButton.icon(
+                style: ElevatedButton.styleFrom(
+                    minimumSize: const Size.fromHeight(50)),
+                onPressed: signUp,
+                icon: const Icon(
+                  Icons.arrow_forward,
+                  size: 32,
+                ),
+                label: const Text(
+                  'Sign up',
+                  style: TextStyle(fontSize: 24),
+                ),
+              ),
+              const SizedBox(height: 24),
+              RichText(
+                text: TextSpan(
+                    text: 'Already have an account',
+                    style: const TextStyle(
+                      color: Colors.black,
                     ),
-                  ]),
-            ),
-          ],
+                    children: [
+                      TextSpan(
+                        recognizer: TapGestureRecognizer()
+                          ..onTap = widget.onClickedSignIn,
+                        text: 'Login',
+                        style: TextStyle(
+                          decoration: TextDecoration.underline,
+                          color: Theme.of(context).colorScheme.primary,
+                        ),
+                      ),
+                    ]),
+              ),
+            ],
+          ),
         ),
       );
 
   void signUp() async {
+    final isValid = formKey.currentState!.validate();
+    if (!isValid) return;
     showDialog(
         context: context,
         barrierDismissible: false,
@@ -99,6 +116,7 @@ class _SignUpWidgetState extends State<SignUpWidget> {
           password: passwordController.text.trim());
     } on FirebaseAuthException catch (e) {
       print(e);
+      Utils.showSnackBar(e.message);
     }
     //Navigator.of(context) not working
 
