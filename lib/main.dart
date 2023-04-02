@@ -5,6 +5,7 @@ import 'package:heyfluttersigninemailverification/homepage.dart';
 
 import 'package:heyfluttersigninemailverification/widgets/auth_page.dart';
 import 'package:heyfluttersigninemailverification/widgets/utils.dart';
+import 'package:heyfluttersigninemailverification/widgets/verify_email_page.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -48,7 +49,7 @@ class MainPage extends StatelessWidget {
               );
             }
             if (snapshot.hasData) {
-              return const HomePage();
+              return const VerifyEmailPage();
             } else {
               return const AuthPage();
             }
