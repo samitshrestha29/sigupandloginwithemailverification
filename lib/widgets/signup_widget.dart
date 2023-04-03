@@ -66,14 +66,12 @@ class _SignUpWidgetState extends State<SignUpWidget> {
                     ),
                     obscureText: true,
                     autovalidateMode: AutovalidateMode.onUserInteraction,
-                    // validator: (value) => value != null && value.length < 6
-                    //     ? 'Enter min. 6 character'
-                    //     : null,
                     validator: (value) => value != null &&
                             !pass_valid.hasMatch(value)
-                        ? 'Password should contain capital letter, small letter, number and special symbol'
+                        ? 'Password should contain capital letter,small letter, number \nand special symbol'
                         : null,
                   ),
+                  const SizedBox(height: 4),
                   const SizedBox(height: 20),
                   Image.asset('assets/Capture.PNG'),
                   ElevatedButton.icon(

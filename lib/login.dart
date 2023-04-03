@@ -20,6 +20,8 @@ class LoginWidget extends StatefulWidget {
 }
 
 class _LoginWidgetState extends State<LoginWidget> {
+  RegExp pass_valid =
+      RegExp(r"^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[!@#\$&*~]).{8,}$");
   final formKey = GlobalKey<FormState>();
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
@@ -46,6 +48,9 @@ class _LoginWidgetState extends State<LoginWidget> {
                     textInputAction: TextInputAction.next,
                     decoration: const InputDecoration(labelText: 'Email'),
                     autovalidateMode: AutovalidateMode.onUserInteraction,
+                    // validator: (value) => value != null && value.length < 6
+                    //     ? 'Enter min. 6 character'
+                    //     : null,
                     validator: (email) =>
                         email != null && !EmailValidator.validate(email)
                             ? 'Enter a valid email'
@@ -61,8 +66,9 @@ class _LoginWidgetState extends State<LoginWidget> {
                     ),
                     obscureText: true,
                     autovalidateMode: AutovalidateMode.onUserInteraction,
-                    validator: (value) => value != null && value.length < 6
-                        ? 'Enter min. 6 character'
+                    validator: (value) => value != null &&
+                            !pass_valid.hasMatch(value)
+                        ? 'Password should contain capital letter, small letter, number and special symbol'
                         : null,
                   ),
                   const SizedBox(height: 20),
